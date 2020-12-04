@@ -1,23 +1,26 @@
+// DOM Elements
+const modal = document.querySelector(".bground");
+const modalOpen = document.querySelectorAll(".modal-btn");
+const modalClose = document.querySelector(".close");
+const formData = document.querySelectorAll(".formData");
+
+
 function editNav() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
+  var topNav = document.getElementById("myTopnav");
+  if (topNav.className === "topnav") {
+    topNav.className += " responsive";
   } else {
-    x.className = "topnav";
+    topNav.className = "topnav";
   }
 }
 
-// DOM Elements
-const modalbg = document.querySelector(".bground");
-const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
-
-// launch modal event
-modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
-
-// launch modal form
 function launchModal() {
-  modalbg.style.display = "block";
+  modal.style.display = "block";
 }
+modalOpen.forEach((btn) => btn.addEventListener("click", launchModal));
 
+function closeModal() {
+  modal.style.display = "none";
+}
+modalClose.addEventListener("click", closeModal);
 
