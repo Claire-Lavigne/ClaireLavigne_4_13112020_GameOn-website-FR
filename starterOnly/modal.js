@@ -1,8 +1,8 @@
 // DOM Elements
 const modal = document.querySelector(".bground");
 const modalOpen = document.querySelectorAll(".modal-btn");
-const modalClose = document.querySelector(".close");
-const formData = document.querySelectorAll(".formData");
+const modalIconClose = document.querySelector(".close");
+const modalBtnClose = document.querySelector(".btn-close");
 const form = document.querySelector('form');
 //const formData = document.querySelectorAll(".formData");
 //const inputs = document.querySelectorAll("input");
@@ -15,6 +15,9 @@ const inputsLocation = document.querySelectorAll('input[name="location"]');
 const inputCheckbox1 = document.querySelector('#checkbox1');
 const inputCheckbox2 = document.querySelector('#checkbox2');
 const modalMessage = document.querySelector(".modal-message");
+
+modalMessage.style.display = "none";
+modalBtnClose.style.display = "none";
 
 function editNav() {
   var topNav = document.getElementById("myTopnav");
@@ -33,7 +36,7 @@ modalOpen.forEach((btn) => btn.addEventListener("click", launchModal));
 function closeModal() {
   modal.style.display = "none";
 }
-modalClose.addEventListener("click", closeModal);
+[modalIconClose, modalBtnClose].forEach((btn) => btn.addEventListener("click", closeModal));
 
 
 // Firstname & Lastname : not empty & 2 characters min
@@ -133,6 +136,12 @@ function validateCheckbox(input) {
   }
 }
 
+function showSuccessMsg() {
+  form.style.display = "none";
+  modalMessage.style.display = 'flex';
+  modalBtnClose.style.display = 'block';
+}
+
 function validateForm(event) {
   let isFormOk = [];
   event.preventDefault(); // disable redirect + keep form datas if invalid
@@ -148,7 +157,7 @@ function validateForm(event) {
 
   // si le formulaire ne contient aucun "false"
   if (!isFormOk.includes(false)) {
-    console.log('Le formulaire a été envoyé');
+    showSuccessMsg();
   }
 }
 // submit form event
