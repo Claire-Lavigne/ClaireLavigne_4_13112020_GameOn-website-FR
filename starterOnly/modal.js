@@ -1,3 +1,4 @@
+  
 // DOM Elements
 const modal = document.querySelector(".bground");
 const modalOpen = document.querySelectorAll(".modal-btn");
@@ -16,9 +17,6 @@ const inputCheckbox1 = document.querySelector('#checkbox1');
 const inputCheckbox2 = document.querySelector('#checkbox2');
 const modalMessage = document.querySelector(".modal-message");
 
-modalMessage.style.display = "none";
-modalBtnClose.style.display = "none";
-
 function editNav() {
   var topNav = document.getElementById("myTopnav");
   if (topNav.className === "topnav") {
@@ -27,6 +25,14 @@ function editNav() {
     topNav.className = "topnav";
   }
 }
+
+function restoreForm() {
+  modalMessage.style.display = "none";
+  modalBtnClose.style.display = "none";
+  form.style.display = "block";
+  form.reset();
+}
+restoreForm()
 
 function launchModal() {
   modal.style.display = "block";
@@ -142,6 +148,7 @@ function showSuccessMsg() {
   modalBtnClose.style.display = 'block';
 }
 
+
 function validateForm(event) {
   let isFormOk = [];
   event.preventDefault(); // disable redirect + keep form datas if invalid
@@ -158,6 +165,7 @@ function validateForm(event) {
   // si le formulaire ne contient aucun "false"
   if (!isFormOk.includes(false)) {
     showSuccessMsg();
+    [modalIconClose, modalBtnClose].forEach((btn) => btn.addEventListener("click", restoreForm));
   }
 }
 // submit form event
