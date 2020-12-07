@@ -21,17 +21,20 @@ const inputCheckbox2 = document.querySelector('#checkbox2');
 const modalMessage = document.querySelector('.modal-message');
 
 
-menuIcon.addEventListener('click', editNav);
 
 restoreForm()
 
-modalOpen.forEach((btn) => btn.addEventListener('click', launchModal));
+menuIcon.addEventListener('click', editNav);
+
+modalOpen.forEach((btn) => btn.addEventListener('click', openModal));
 
 [modalIconClose, modalBtnClose].forEach((btn) => btn.addEventListener('click', closeModal));
 
 form.addEventListener('submit', validateForm);
 
 
+
+// Toggle responsive class to topnav
 function editNav(event) {
   event.preventDefault();
   if (topNav.className === 'topnav') {
@@ -41,6 +44,17 @@ function editNav(event) {
   }
 }
 
+// display form
+function openModal() {
+  modal.style.display = 'block';
+}
+
+// hide form
+function closeModal() {
+  modal.style.display = 'none';
+}
+
+// switch from confirmation message to reset form
 function restoreForm() {
   modalMessage.style.display = 'none';
   modalBtnClose.style.display = 'none';
@@ -48,13 +62,14 @@ function restoreForm() {
   form.reset();
 }
 
-function launchModal() {
-  modal.style.display = 'block';
+// switch from valid form to confirmation message
+function showSuccessMsg() {
+  form.style.display = 'none';
+  modalMessage.style.display = 'flex';
+  modalBtnClose.style.display = 'block';
 }
 
-function closeModal() {
-  modal.style.display = 'none';
-}
+////// VALIDATION FUNCTIONS //////
 
 // Firstname & Lastname : not empty & 2 characters min
 function validateText(input) {
@@ -69,8 +84,11 @@ function validateText(input) {
 
 // Email : corresponds to regex
 function validateEmail(input) {
-  // Email Regular Expression from guide dev mozilla
-  // string (from azAz09 and symbols 1 or more times) @ (from azAz09 and '-' 1 or more times) (optional group : '.' and from azAz09 and '-' 0 or more times) end string
+  // Regular Expression from Guide Dev Mozilla
+  /*  string [from azAz09 and symbols] 1 or more times 
+      @ [from azAz09 and '-'] 1 or more times
+      optional group : '.'[from azAz09 and '-'] 0 or more times
+  */
   const emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   if (!emailRegExp.test(input.value.trim())) {
@@ -140,12 +158,7 @@ function validateCheckbox(input) {
     return true;
   }
 }
-
-function showSuccessMsg() {
-  form.style.display = 'none';
-  modalMessage.style.display = 'flex';
-  modalBtnClose.style.display = 'block';
-}
+////// END VALIDATION FUNCTIONS //////
 
 // submit form
 function validateForm(event) {
@@ -160,14 +173,13 @@ function validateForm(event) {
   isFormOk.push(validateRadio(inputsLocation));
   isFormOk.push(validateCheckbox(inputCheckbox1));
 
-  // si le formulaire ne contient aucun 'false'
+  // if form doesn't return any 'false'
   if (!isFormOk.includes(false)) {
+    // get every valid keys/values
     let datas = new FormData(form);
     for (let entry of datas.entries()) {
       console.log(entry[0], ':', entry[1]);
     }
-    console.log('conditions : ' + inputCheckbox1.checked);
-    console.log('newsletter : ' + inputCheckbox2.checked);
 
     showSuccessMsg();
     [modalIconClose, modalBtnClose].forEach((btn) => btn.addEventListener('click', restoreForm));
