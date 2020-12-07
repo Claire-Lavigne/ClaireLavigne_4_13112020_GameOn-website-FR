@@ -1,55 +1,59 @@
 // DOM Elements
-const topNav = document.getElementById("myTopnav");
-const modal = document.querySelector(".bground");
-const modalOpen = document.querySelectorAll(".modal-btn");
-const modalIconClose = document.querySelector(".close");
-const modalBtnClose = document.querySelector(".btn-close");
+const topNav = document.querySelector('#myTopnav');
+const menuIcon = document.querySelector('#myTopnav .icon');
+const modal = document.querySelector('.bground');
+const modalOpen = document.querySelectorAll('.modal-btn');
+const modalIconClose = document.querySelector('.close');
+const modalBtnClose = document.querySelector('.btn-close');
 const form = document.querySelector('form');
-//const formData = document.querySelectorAll(".formData");
-//const inputs = document.querySelectorAll("input");
+//const formData = document.querySelectorAll('.formData');
+//const inputs = document.querySelectorAll('input');
 const inputFirstname = document.querySelector('#first');
 const inputLastname = document.querySelector('#last');
 const inputEmail = document.querySelector('#email');
 const inputBirthdate = document.querySelector('#birthdate');
-      inputBirthdate.max = new Date().toISOString().split("T")[0];
-      inputBirthdate.min = "1870-01-01";
+      inputBirthdate.max = new Date().toISOString().split('T')[0];
+      inputBirthdate.min = '1870-01-01';
 const inputQuantity = document.querySelector('#quantity');
 const inputsLocation = document.querySelectorAll('input[name="location"]');
 const inputCheckbox1 = document.querySelector('#checkbox1');
 const inputCheckbox2 = document.querySelector('#checkbox2');
-const modalMessage = document.querySelector(".modal-message");
+const modalMessage = document.querySelector('.modal-message');
 
+
+menuIcon.addEventListener('click', editNav);
 
 restoreForm()
 
-modalOpen.forEach((btn) => btn.addEventListener("click", launchModal));
+modalOpen.forEach((btn) => btn.addEventListener('click', launchModal));
 
-[modalIconClose, modalBtnClose].forEach((btn) => btn.addEventListener("click", closeModal));
+[modalIconClose, modalBtnClose].forEach((btn) => btn.addEventListener('click', closeModal));
 
-form.addEventListener("submit", validateForm);
+form.addEventListener('submit', validateForm);
 
 
-function editNav() {
-  if (topNav.className === "topnav") {
-    topNav.className += " responsive";
+function editNav(event) {
+  event.preventDefault();
+  if (topNav.className === 'topnav') {
+    topNav.className += ' responsive';
   } else {
-    topNav.className = "topnav";
+    topNav.className = 'topnav';
   }
 }
 
 function restoreForm() {
-  modalMessage.style.display = "none";
-  modalBtnClose.style.display = "none";
-  form.style.display = "block";
+  modalMessage.style.display = 'none';
+  modalBtnClose.style.display = 'none';
+  form.style.display = 'block';
   form.reset();
 }
 
 function launchModal() {
-  modal.style.display = "block";
+  modal.style.display = 'block';
 }
 
 function closeModal() {
-  modal.style.display = "none";
+  modal.style.display = 'none';
 }
 
 // Firstname & Lastname : not empty & 2 characters min
@@ -126,7 +130,7 @@ function validateRadio(input) {
   }
 }
 
-// checkbox "general conditions" checked
+// checkbox 'general conditions' checked
 function validateCheckbox(input) {
   if (!input.checked) {
     input.parentElement.setAttribute('data-error-visible', 'true');
@@ -138,7 +142,7 @@ function validateCheckbox(input) {
 }
 
 function showSuccessMsg() {
-  form.style.display = "none";
+  form.style.display = 'none';
   modalMessage.style.display = 'flex';
   modalBtnClose.style.display = 'block';
 }
@@ -156,7 +160,7 @@ function validateForm(event) {
   isFormOk.push(validateRadio(inputsLocation));
   isFormOk.push(validateCheckbox(inputCheckbox1));
 
-  // si le formulaire ne contient aucun "false"
+  // si le formulaire ne contient aucun 'false'
   if (!isFormOk.includes(false)) {
     let datas = new FormData(form);
     for (let entry of datas.entries()) {
@@ -166,6 +170,6 @@ function validateForm(event) {
     console.log('newsletter : ' + inputCheckbox2.checked);
 
     showSuccessMsg();
-    [modalIconClose, modalBtnClose].forEach((btn) => btn.addEventListener("click", restoreForm));
+    [modalIconClose, modalBtnClose].forEach((btn) => btn.addEventListener('click', restoreForm));
   }
 }
