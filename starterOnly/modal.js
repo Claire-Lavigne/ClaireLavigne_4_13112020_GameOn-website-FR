@@ -54,7 +54,7 @@ function closeModal() {
   modal.style.display = 'none';
 }
 
-// switch from confirmation message to reset form
+// switch confirmation message to reset form
 function restoreForm() {
   modalMessage.style.display = 'none';
   modalBtnClose.style.display = 'none';
@@ -62,14 +62,14 @@ function restoreForm() {
   form.reset();
 }
 
-// switch from valid form to confirmation message
+// switch valid form to confirmation message
 function showSuccessMsg() {
   form.style.display = 'none';
   modalMessage.style.display = 'flex';
   modalBtnClose.style.display = 'block';
 }
 
-////// VALIDATION FUNCTIONS //////
+////// --VALIDATION FUNCTIONS-- //////
 
 // Firstname & Lastname : not empty & 2 characters min
 function validateText(input) {
@@ -85,6 +85,7 @@ function validateText(input) {
 // Email : corresponds to regex
 function validateEmail(input) {
   // Regular Expression from Guide Dev Mozilla
+  // https://developer.mozilla.org/fr/docs/Web/Guide/HTML/Formulaires/Validation_donnees_formulaire
   /*  string [from azAz09 and symbols] 1 or more times 
       @ [from azAz09 and '-'] 1 or more times
       optional group : '.'[from azAz09 and '-'] 0 or more times
@@ -114,7 +115,7 @@ function validateDate(input) {
   }
 }
 
-// valid number between 0 and 99
+// valid int number between 0 and 99
 function validateNumber(input) {
   if (isNaN(input.value) || !input.value || input.value % 1 !== 0) {
     input.parentElement.setAttribute('data-error-visible', 'true');
@@ -158,7 +159,7 @@ function validateCheckbox(input) {
     return true;
   }
 }
-////// END VALIDATION FUNCTIONS //////
+////// --END VALIDATION FUNCTIONS-- //////
 
 // submit form
 function validateForm(event) {
